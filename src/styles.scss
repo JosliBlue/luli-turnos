@@ -30,7 +30,6 @@
 }
 
 html {
-    height: 100%;
     @include mat.theme(
         (
             color: (
@@ -73,6 +72,7 @@ html {
     white-space: nowrap;
     word-wrap: normal;
     direction: ltr;
+    font-feature-settings: 'liga';
     -moz-font-feature-settings: 'liga';
     -moz-osx-font-smoothing: grayscale;
 }
@@ -89,6 +89,7 @@ html {
     white-space: nowrap;
     word-wrap: normal;
     direction: ltr;
+    font-feature-settings: 'liga';
     -moz-font-feature-settings: 'liga';
     -moz-osx-font-smoothing: grayscale;
 }
