@@ -1,8 +1,49 @@
 <div class="p-4 md:p-8">
-    <div class="flex gap-4 items-center">
-        <div class="logo-mask size-20 bg-black" role="img" aria-label="Logo de la pagina"></div>
-        <h2 class="text-4xl uppercase font-extrabold tracking-widest">
-            {{ mesActual }}
-        </h2>
-    </div>
+    <section class="space-y-4">
+        <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+            <div class="flex gap-4 items-center">
+                <div
+                    class="logo-mask size-20 bg-black"
+                    role="img"
+                    aria-label="Logo de la pagina"
+                ></div>
+                <h2 class="text-4xl uppercase font-extrabold tracking-widest">
+                    {{ mesActual }}
+                </h2>
+            </div>
+
+            <div class="flex flex-wrap gap-4 items-center">
+                <span>Da click sobre los dias para que aparezcan:</span>
+                @for (dia of diasSemana; track dia) {
+                    @if (diasSeleccionados().includes(dia)) {
+                        <button
+                            class="cursor-pointer rounded-lg border border-(--color-texto-taxo-oscuro) bg-(--color-texto-taxo-oscuro) px-3 py-1.5 text-md font-semibold text-(--background-taxo-superior) transition-colors duration-200 hover:border-(--color-texto-durazno-oscuro) hover:bg-(--color-texto-durazno-oscuro) hover:text-(--background-durazno-superior)"
+                            type="button"
+                            (click)="toggleDia(dia)"
+                        >
+                            {{ dia }}
+                        </button>
+                    } @else {
+                        <button
+                            class="cursor-pointer rounded-lg border border-(--color-taxo) bg-(--background-taxo-superior) px-3 py-1.5 text-md font-semibold text-(--color-texto-taxo-oscuro) transition-colors duration-200 hover:border-(--color-durazno) hover:bg-(--background-durazno-superior) hover:text-(--color-texto-durazno-oscuro)"
+                            type="button"
+                            (click)="toggleDia(dia)"
+                        >
+                            {{ dia }}
+                        </button>
+                    }
+                }
+            </div>
+        </div>
+
+        <div class="grid gap-3" [style.gridTemplateColumns]="columnasGrid">
+            @for (dia of diasSeleccionados(); track dia) {
+                <div
+                    class="text-3xl grid min-h-18 place-content-center rounded-xl border-2 border-(--color-taxo) bg-(--background-taxo-superior) font-extrabold tracking-widest text-(--color-texto-taxo-oscuro)"
+                >
+                    {{ dia }}
+                </div>
+            }
+        </div>
+    </section>
 </div>

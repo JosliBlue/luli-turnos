@@ -18,13 +18,17 @@
 @theme {
     --font-sans: 'Inter', system-ui;
     
-    // Colores tema claro 1
+    // Colores tema claro
     --color-durazno: #fdcb9e;
     --color-taxo: #f7de8f;
 
     --background-durazno: color-mix(in srgb, var(--color-durazno) 25%);
-    --background-superior: color-mix(in srgb, var(--color-durazno) 15%, white);
-    --color-texto1: #7a5531;
+    --background-durazno-superior: color-mix(in srgb, var(--color-durazno) 15%, white);
+    --color-texto-durazno-oscuro: color-mix(in srgb, var(--color-durazno) 45%, #3f2008);
+
+    --background-taxo: color-mix(in srgb, var(--color-taxo) 25%);
+    --background-taxo-superior: color-mix(in srgb, var(--color-taxo) 15%, white);
+    --color-texto-taxo-oscuro: color-mix(in srgb, var(--color-taxo) 5%, #B5A318);
 }
 
 /* 1. Definimos el tema afuera para mejor organización */
