@@ -1,9 +1,6 @@
 @use 'tailwindcss';
 @use '@angular/material' as mat;
 
-$color-durazno: #fdcb9e;
-$color-taxo: #f7de8f;
-
 @font-face {
     font-family: 'Inter';
     src: url('/fonts/Inter-VariableFont_opsz,wght.ttf') format('truetype-variations');
@@ -18,44 +15,47 @@ $color-taxo: #f7de8f;
     src: url('/fonts/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2') format('woff2');
 }
 
+@theme {
+    --font-sans: 'Inter', system-ui;
+    
+    // Colores tema claro 1
+    --color-durazno: #fdcb9e;
+    --color-taxo: #f7de8f;
+
+    --background-durazno: color-mix(in srgb, var(--color-durazno) 25%);
+    --background-superior: color-mix(in srgb, var(--color-durazno) 15%, white);
+    --color-texto1: #7a5531;
+}
+
+/* 1. Definimos el tema afuera para mejor organización */
+$my-theme: mat.define-theme(
+    (
+        color: (
+            primary: mat.$azure-palette,
+            tertiary: mat.$blue-palette,
+        ),
+        typography: (
+            plain-family: 'Inter, system-ui',
+            brand-family: 'Inter, system-ui',
+        ),
+        density: (
+            scale: 0,
+        ),
+    )
+);
+
 html {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-
-    $my-theme: mat.define-theme(
-        (
-            color: (
-                primary: mat.$azure-palette,
-                tertiary: mat.$blue-palette,
-            ),
-            typography: (
-                plain-family: 'Inter, system-ui',
-                brand-family: 'Inter, system-ui',
-            ),
-            density: (
-                scale: 0,
-            ),
-        )
-    );
+    height: 100%;
 
     @include mat.all-component-themes($my-theme);
 
+    background-color: var(--background-durazno);
+
     color-scheme: light;
 }
-
-@theme {
-    --font-sans: 'Inter', system-ui;
-}
-
-// body {
-
-//     background-color: var(--mat-sys-surface);
-//     color: var(--mat-sys-on-surface);
-//     font: var(--mat-sys-body-medium);
-
-//     margin: 0;
-// }
 
 .material-icons {
     font-family: 'Material Icons';

@@ -1,10 +1,10 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { Header } from './components/header/header';
+import { Component } from '@angular/core';
+import { Header } from '@src/app/shared/header/header';
+import { Calendario } from "@src/app/pages/calendario/calendario";
 
 @Component({
     selector: 'app-root',
-    imports: [Header],
+    imports: [Header, Calendario],
     templateUrl: './app.html',
     styleUrl: './app.scss',
 })
