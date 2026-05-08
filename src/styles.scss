@@ -1,1 +1,110 @@
-/* You can add global styles to this file, and also import other style files */
+@use 'tailwindcss';
+@use '@angular/material' as mat;
+
+@font-face {
+    font-family: 'Inter';
+    src: url('/fonts/Inter-VariableFont_opsz,wght.ttf') format('truetype-variations');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Inter';
+    src: url('/fonts/Inter-Italic-VariableFont_opsz,wght.ttf') format('truetype-variations');
+    font-weight: 100 900;
+    font-style: italic;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Material Icons';
+    font-style: normal;
+    font-weight: 400;
+    src: url('/fonts/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2') format('woff2');
+}
+@font-face {
+    font-family: 'Material Symbols Outlined';
+    font-style: normal;
+    font-weight: 400;
+    src: url('/fonts/material_icons_outline.woff2') format('woff2');
+    font-display: swap;
+}
+
+html {
+    height: 100%;
+    @include mat.theme(
+        (
+            color: (
+                primary: mat.$azure-palette,
+                tertiary: mat.$blue-palette,
+            ),
+            typography: (
+                plain-family: 'Inter, system-ui',
+                brand-family: 'Inter, system-ui',
+            ),
+            density: 0,
+        )
+    );
+    color-scheme: light;
+    height: 100%;
+}
+
+@theme {
+    --font-sans: 'Inter', system-ui;
+}
+
+// body {
+
+//     background-color: var(--mat-sys-surface);
+//     color: var(--mat-sys-on-surface);
+//     font: var(--mat-sys-body-medium);
+
+//     margin: 0;
+// }
+
+.material-icons {
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -moz-font-feature-settings: 'liga';
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.material-symbols-outlined {
+    font-family: 'Material Symbols Outlined';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -moz-font-feature-settings: 'liga';
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* 
+  Permitir deslizar (scroll vertical) en móviles cuando se inicia el toque sobre
+  botones o elementos interactivos de Angular Material. 
+  Previene que directivas como matTooltip o gestos internos bloqueen el scroll.
+*/
+button,
+a,
+mat-slide-toggle,
+mat-checkbox,
+mat-radio-button,
+input[type='checkbox'],
+input[type='radio'],
+.mat-mdc-button-touch-target {
+    touch-action: pan-y !important;
+}
