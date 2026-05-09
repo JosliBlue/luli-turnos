@@ -2,11 +2,6 @@
     <section class="space-y-4">
         <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <div class="flex gap-4 items-center">
-                <div
-                    class="logo-mask size-20 bg-black"
-                    role="img"
-                    aria-label="Logo de la pagina"
-                ></div>
                 <h2 class="text-4xl uppercase font-extrabold tracking-widest">
                     {{ mesActual }}
                 </h2>
@@ -39,10 +34,44 @@
         <div class="grid gap-3" [style.gridTemplateColumns]="columnasGrid">
             @for (dia of diasSeleccionados(); track dia) {
                 <div
-                    class="text-3xl grid min-h-18 place-content-center rounded-xl border-2 border-(--color-taxo) bg-(--background-taxo-superior) font-extrabold tracking-widest text-(--color-texto-taxo-oscuro)"
+                    class="text-3xl grid min-h-18 place-content-center rounded-xl border-2 border-(--color-durazno) bg-(--background-durazno-superior) font-extrabold tracking-widest text-(--color-texto-durazno-oscuro)"
                 >
                     {{ dia }}
                 </div>
+            }
+        </div>
+
+        <div class="grid gap-3" [style.gridTemplateColumns]="columnasGrid">
+            @for (celda of diasCalendario; track $index) {
+                @if (celda.tipo === 'dia') {
+                    <article
+                        class="flex min-h-30 cursor-pointer flex-col justify-between rounded-xl border-2 border-(--color-durazno) bg-(--background-durazno-superior) p-3 transition-colors duration-200 hover:border-(--color-taxo) hover:bg-(--background-taxo-superior)"
+                        (click)="iniciarEdicion(celda)"
+                    >
+                        <span class="self-start text-4xl font-extrabold text-(--color-texto-durazno-oscuro)">
+                            {{ celda.numeroDia }}
+                        </span>
+                        @if (diaEnEdicion === celda.numeroDia) {
+                            <input
+                                [id]="'texto-dia-' + celda.numeroDia"
+                                class="w-full max-w-full self-end border-b border-black bg-transparent px-2 py-0.5 text-right text-4xl font-bold text-black outline-none"
+                                type="text"
+                                [value]="borradorTexto"
+                                (input)="actualizarBorrador($event)"
+                                (keydown.tab)="irConTab($event, celda.numeroDia)"
+                                (click)="$event.stopPropagation()"
+                                (blur)="guardarEdicion(celda.numeroDia)"
+                                autofocus
+                            />
+                        } @else {
+                            <span class="self-end px-2 py-0.5 text-5xl font-bold text-black">
+                                {{ celda.texto }}
+                            </span>
+                        }
+                    </article>
+                } @else {
+                    <div class="min-h-24"></div>
+                }
             }
         </div>
     </section>
