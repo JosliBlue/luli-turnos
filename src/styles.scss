@@ -1,5 +1,4 @@
 @use 'tailwindcss';
-@use '@angular/material' as mat;
 
 @font-face {
     font-family: 'Inter';
@@ -7,12 +6,6 @@
     font-weight: 100 900;
     font-style: normal;
     font-display: swap;
-}
-@font-face {
-    font-family: 'Material Icons';
-    font-style: normal;
-    font-weight: 400;
-    src: url('/fonts/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2') format('woff2');
 }
 
 @theme {
@@ -31,67 +24,15 @@
     --color-texto-taxo-oscuro: color-mix(in srgb, var(--color-taxo) 5%, #b5a318);
 }
 
-/* 1. Definimos el tema afuera para mejor organización */
-$my-theme: mat.define-theme(
-    (
-        color: (
-            primary: mat.$azure-palette,
-            tertiary: mat.$blue-palette,
-        ),
-        typography: (
-            plain-family: 'Inter, system-ui',
-            brand-family: 'Inter, system-ui',
-        ),
-        density: (
-            scale: 0,
-        ),
-    )
-);
-
 html {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     height: 100%;
 
-    @include mat.all-component-themes($my-theme);
-
     background-color: var(--background-durazno);
 
     color-scheme: light;
-}
-
-.material-icons {
-    font-family: 'Material Icons';
-    font-weight: normal;
-    font-style: normal;
-    font-size: 24px;
-    line-height: 1;
-    letter-spacing: normal;
-    text-transform: none;
-    display: inline-block;
-    white-space: nowrap;
-    word-wrap: normal;
-    direction: ltr;
-    font-feature-settings: 'liga';
-    -moz-font-feature-settings: 'liga';
-    -moz-osx-font-smoothing: grayscale;
-}
-
-/* 
-  Permitir deslizar (scroll vertical) en móviles cuando se inicia el toque sobre
-  botones o elementos interactivos de Angular Material. 
-  Previene que directivas como matTooltip o gestos internos bloqueen el scroll.
-*/
-button,
-a,
-mat-slide-toggle,
-mat-checkbox,
-mat-radio-button,
-input[type='checkbox'],
-input[type='radio'],
-.mat-mdc-button-touch-target {
-    touch-action: pan-y !important;
 }
 
 @media print {
