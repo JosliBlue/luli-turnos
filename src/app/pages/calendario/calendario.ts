@@ -6,6 +6,9 @@ interface DiaCalendarioCard {
     texto?: string;
 }
 
+/** Un objeto por clave "año-mes" (mes 0-11); cada mes tiene día -> texto. */
+type AlmacenCalendario = Record<string, Record<string, string>>;
+
 @Component({
     selector: 'app-calendario',
     imports: [],
@@ -13,16 +16,30 @@ interface DiaCalendarioCard {
     styleUrl: './calendario.scss',
 })
 export class Calendario implements OnInit {
+    private static readonly STORAGE_KEY = 'luli-turnos-calendario-textos';
+
     public mesActual: string = '';
-    public readonly diasSemana = ['LUNES', 'MARTES', 'MIÉRCOLES', 'JUEVES', 'VIERNES', 'SÁBADO', 'DOMINGO'];
-    public readonly diasSeleccionados = signal<string[]>(this.diasSemana.filter((dia) => dia !== 'DOMINGO'));
+    public readonly diasSemana = [
+        'LUNES',
+        'MARTES',
+        'MIÉRCOLES',
+        'JUEVES',
+        'VIERNES',
+        'SÁBADO',
+        'DOMINGO',
+    ];
+    public readonly diasSeleccionados = signal<string[]>(
+        this.diasSemana.filter((dia) => dia !== 'DOMINGO')
+    );
     public diasCalendario: DiaCalendarioCard[] = [];
     public diaEnEdicion: number | null = null;
     public borradorTexto: string = '';
     private textosPorDia: Record<number, string> = {};
 
     ngOnInit(): void {
-        this.mesActual = new Intl.DateTimeFormat('es-ES', { month: 'long' }).format(new Date());
+        const hoy = new Date();
+        this.cargarMesDesdeAlmacenamiento(hoy.getFullYear(), hoy.getMonth());
+        this.mesActual = new Intl.DateTimeFormat('es-ES', { month: 'long' }).format(hoy);
         this.generarCalendarioDesdeHoy();
     }
 
@@ -58,7 +75,9 @@ export class Calendario implements OnInit {
 
         // Espera al render del input para enfocarlo automaticamente.
         setTimeout(() => {
-            const input = document.getElementById(`texto-dia-${celda.numeroDia}`) as HTMLInputElement | null;
+            const input = document.getElementById(
+                `texto-dia-${celda.numeroDia}`
+            ) as HTMLInputElement | null;
             input?.focus();
             input?.select();
         });
@@ -76,6 +95,27 @@ export class Calendario implements OnInit {
 
         this.textosPorDia[numeroDia] = this.borradorTexto.trim();
         this.diaEnEdicion = null;
+        this.persistirTextosActual();
+        this.generarCalendarioDesdeHoy();
+    }
+
+    public imprimirHorario(): void {
+        if (this.diaEnEdicion !== null) {
+            this.guardarEdicion(this.diaEnEdicion);
+        }
+        setTimeout(() => window.print(), 0);
+    }
+
+    /** Vacía todo el `localStorage` del navegador en este origen y reinicia el calendario. */
+    public limpiarTodoLocalStorage(): void {
+        try {
+            localStorage.clear();
+        } catch {
+            /* noop */
+        }
+        this.textosPorDia = {};
+        this.diaEnEdicion = null;
+        this.borradorTexto = '';
         this.generarCalendarioDesdeHoy();
     }
 
@@ -87,6 +127,7 @@ export class Calendario implements OnInit {
         const eventoTeclado = evento as KeyboardEvent;
         eventoTeclado.preventDefault();
         this.textosPorDia[numeroDia] = this.borradorTexto.trim();
+        this.persistirTextosActual();
 
         const diasEditables = this.diasCalendario
             .filter((celda) => celda.tipo === 'dia' && celda.numeroDia !== undefined)
@@ -114,7 +155,9 @@ export class Calendario implements OnInit {
         this.generarCalendarioDesdeHoy();
 
         setTimeout(() => {
-            const input = document.getElementById(`texto-dia-${siguienteDia}`) as HTMLInputElement | null;
+            const input = document.getElementById(
+                `texto-dia-${siguienteDia}`
+            ) as HTMLInputElement | null;
             input?.focus();
             input?.select();
         });
@@ -164,5 +207,68 @@ export class Calendario implements OnInit {
     private obtenerIndiceSemana(fecha: Date): number {
         // Convierte JS (domingo=0) a inicio en lunes (lunes=0).
         return (fecha.getDay() + 6) % 7;
+    }
+
+    private claveMes(anio: number, mes: number): string {
+        return `${anio}-${mes}`;
+    }
+
+    private leerAlmacenamientoCompleto(): AlmacenCalendario {
+        try {
+            const raw = localStorage.getItem(Calendario.STORAGE_KEY);
+            if (!raw) {
+                return {};
+            }
+            const parsed: unknown = JSON.parse(raw);
+            if (parsed === null || typeof parsed !== 'object' || Array.isArray(parsed)) {
+                return {};
+            }
+            return parsed as AlmacenCalendario;
+        } catch {
+            return {};
+        }
+    }
+
+    private cargarMesDesdeAlmacenamiento(anio: number, mes: number): void {
+        const todo = this.leerAlmacenamientoCompleto();
+        const mesData = todo[this.claveMes(anio, mes)];
+        this.textosPorDia = {};
+        if (!mesData) {
+            return;
+        }
+        for (const [diaStr, texto] of Object.entries(mesData)) {
+            const dia = Number(diaStr);
+            if (!Number.isNaN(dia)) {
+                this.textosPorDia[dia] = texto;
+            }
+        }
+    }
+
+    private persistirTextosActual(): void {
+        const hoy = new Date();
+        const anio = hoy.getFullYear();
+        const mes = hoy.getMonth();
+        const todo = this.leerAlmacenamientoCompleto();
+        const clave = this.claveMes(anio, mes);
+        const obj: Record<string, string> = {};
+
+        for (const [diaStr, valor] of Object.entries(this.textosPorDia)) {
+            const t = String(valor).trim();
+            if (t) {
+                obj[diaStr] = t;
+            }
+        }
+
+        if (Object.keys(obj).length === 0) {
+            delete todo[clave];
+        } else {
+            todo[clave] = obj;
+        }
+
+        try {
+            localStorage.setItem(Calendario.STORAGE_KEY, JSON.stringify(todo));
+        } catch {
+            /* espacio lleno u origen opaco */
+        }
     }
 }

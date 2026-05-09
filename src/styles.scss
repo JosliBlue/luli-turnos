@@ -17,7 +17,7 @@
 
 @theme {
     --font-sans: 'Inter', system-ui;
-    
+
     // Colores tema claro
     --color-durazno: #fdcb9e;
     --color-taxo: #f7de8f;
@@ -28,7 +28,7 @@
 
     --background-taxo: color-mix(in srgb, var(--color-taxo) 25%);
     --background-taxo-superior: color-mix(in srgb, var(--color-taxo) 15%, white);
-    --color-texto-taxo-oscuro: color-mix(in srgb, var(--color-taxo) 5%, #B5A318);
+    --color-texto-taxo-oscuro: color-mix(in srgb, var(--color-taxo) 5%, #b5a318);
 }
 
 /* 1. Definimos el tema afuera para mejor organización */
@@ -92,4 +92,57 @@ input[type='checkbox'],
 input[type='radio'],
 .mat-mdc-button-touch-target {
     touch-action: pan-y !important;
+}
+
+@media print {
+    @page {
+        size: A4 landscape;
+        margin: 1cm;
+    }
+
+    html,
+    body {
+        background: #fff !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        height: fit-content !important;
+        max-height: none !important;
+        overflow: visible !important;
+        -webkit-text-size-adjust: none !important;
+        text-size-adjust: none !important;
+    }
+
+    app-root {
+        display: block !important;
+        height: auto !important;
+        min-height: 0 !important;
+    }
+
+    app-header,
+    app-footer {
+        display: none !important;
+    }
+
+    /* Evita que min-h-dvh + main flex-1 estiren el documento a 2 paginas */
+    app-root > .flex.min-h-dvh {
+        display: block !important;
+        min-height: 0 !important;
+        height: auto !important;
+        max-height: none !important;
+        width: 100%;
+    }
+
+    app-root main {
+        display: block !important;
+        flex: none !important;
+        flex-grow: 0 !important;
+        flex-shrink: 0 !important;
+        flex-basis: auto !important;
+        min-height: 0 !important;
+        height: auto !important;
+        max-height: none !important;
+        overflow: visible !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
 }

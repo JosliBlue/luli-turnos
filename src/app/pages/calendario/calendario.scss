@@ -1,0 +1,136 @@
+.no-imprimir {
+    @media print {
+        display: none !important;
+    }
+}
+
+/* Area util A4 apaisado con margenes 1 cm: 297-20 por 210-20 mm.
+ * Ligeramente menor en alto para evitar 2ª pagina en blanco por subpixel/tinta. */
+$calendario-print-ancho: 277mm;
+$calendario-print-alto: calc(210mm - 20mm - 0.5mm);
+
+@media print {
+    :host {
+        display: block;
+        height: auto !important;
+        min-height: 0 !important;
+    }
+
+    .calendario-pagina {
+        padding: 0 !important;
+        height: auto !important;
+    }
+
+    .calendario-pagina > section {
+        margin: 0 !important;
+        padding: 0 !important;
+        height: auto !important;
+    }
+
+    .calendario-pagina > section > .calendario-imprimible {
+        margin-top: 0 !important;
+    }
+
+    .calendario-imprimible {
+        display: grid !important;
+        grid-template-rows: auto 1fr;
+        gap: 3mm !important;
+        width: $calendario-print-ancho;
+        height: $calendario-print-alto;
+        max-width: $calendario-print-ancho;
+        max-height: $calendario-print-alto;
+        margin: 0 !important;
+        padding: 0 !important;
+        box-sizing: border-box;
+        page-break-inside: avoid;
+        break-inside: avoid;
+        overflow: hidden;
+        filter: none;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        /* Anula space-y-3 de Tailwind entre hijos directos */
+        & > * {
+            margin-top: 0 !important;
+        }
+    }
+
+    .calendario-print-encabezados {
+        gap: 5mm !important;
+        min-height: 0;
+    }
+
+    /*
+     * En impresión / PDF, vh/vw y clamp con viewport suelen resolverse distinto
+     * entre la previsualización y "Guardar como PDF". Usar solo pt fijos.
+     */
+    .calendario-print-encabezados .card-imprimible {
+        min-height: 0 !important;
+        padding: 2mm !important;
+        font-size: 13pt !important;
+        line-height: 1.1 !important;
+        background: var(--background-durazno-superior) !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .calendario-print-celdas {
+        min-height: 0 !important;
+        height: 100% !important;
+        align-content: stretch !important;
+        grid-auto-rows: 1fr !important;
+        gap: 5mm !important;
+    }
+
+    .calendario-print-celdas .card-imprimible,
+    .calendario-print-celdas article.card-imprimible {
+        min-height: 0 !important;
+        height: 100% !important;
+        max-height: none !important;
+        box-sizing: border-box;
+        padding: 3mm !important;
+        align-content: space-between;
+        overflow: hidden;
+        background: var(--background-taxo-superior) !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .calendario-print-celdas .card-imprimible span.self-start {
+        font-size: 24pt !important;
+        line-height: 1 !important;
+    }
+
+    .calendario-print-celdas .card-imprimible span.self-end {
+        font-size: 34pt !important;
+        line-height: 1 !important;
+        word-break: break-word;
+        text-align: right;
+    }
+
+    .calendario-imprimible .card-imprimible,
+    .calendario-imprimible article.card-imprimible {
+        color: #000 !important;
+        border-color: #000 !important;
+        border-width: 1px !important;
+        border-style: solid !important;
+        box-shadow: none !important;
+    }
+
+    .calendario-imprimible .celda-vacia {
+        background: transparent !important;
+        border: none !important;
+        height: 100% !important;
+        min-height: 0 !important;
+    }
+
+    .calendario-imprimible input {
+        border: none !important;
+        border-bottom: 1px solid #000 !important;
+        background: transparent !important;
+        color: #000 !important;
+        width: 100% !important;
+        font-size: 28pt !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+}
