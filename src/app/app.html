@@ -1,2 +1,7 @@
-<app-header/>
-<app-calendario/>
+<div class="flex min-h-dvh w-full flex-col">
+    <app-header />
+    <main class="min-h-0 flex-1 overflow-y-auto">
+        <router-outlet />
+    </main>
+    <app-footer />
+</div>
