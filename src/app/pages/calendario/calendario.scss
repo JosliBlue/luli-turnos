@@ -9,49 +9,24 @@
 $calendario-print-ancho: 277mm;
 $calendario-print-alto: calc(210mm - 20mm - 0.5mm);
 
-@media print {
-    :host {
-        display: block;
-        height: auto !important;
-        min-height: 0 !important;
-    }
+@mixin calendario-layout-imprimible {
+    display: grid !important;
+    grid-template-rows: auto 1fr;
+    gap: 3mm !important;
+    width: $calendario-print-ancho;
+    height: $calendario-print-alto;
+    max-width: $calendario-print-ancho;
+    max-height: $calendario-print-alto;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box;
+    overflow: hidden;
+    filter: none;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
 
-    .calendario-pagina {
-        padding: 0 !important;
-        height: auto !important;
-    }
-
-    .calendario-pagina > section {
-        margin: 0 !important;
-        padding: 0 !important;
-        height: auto !important;
-    }
-
-    .calendario-pagina > section > .calendario-imprimible {
+    & > * {
         margin-top: 0 !important;
-    }
-
-    .calendario-imprimible {
-        display: grid !important;
-        grid-template-rows: auto 1fr;
-        gap: 3mm !important;
-        width: $calendario-print-ancho;
-        height: $calendario-print-alto;
-        max-width: $calendario-print-ancho;
-        max-height: $calendario-print-alto;
-        margin: 0 !important;
-        padding: 0 !important;
-        box-sizing: border-box;
-        page-break-inside: avoid;
-        break-inside: avoid;
-        overflow: hidden;
-        filter: none;
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
-        /* Anula space-y-3 de Tailwind entre hijos directos */
-        & > * {
-            margin-top: 0 !important;
-        }
     }
 
     .calendario-print-encabezados {
@@ -59,10 +34,6 @@ $calendario-print-alto: calc(210mm - 20mm - 0.5mm);
         min-height: 0;
     }
 
-    /*
-     * En impresión / PDF, vh/vw y clamp con viewport suelen resolverse distinto
-     * entre la previsualización y "Guardar como PDF". Usar solo pt fijos.
-     */
     .calendario-print-encabezados .card-imprimible {
         min-height: 0 !important;
         padding: 2mm !important;
@@ -91,6 +62,7 @@ $calendario-print-alto: calc(210mm - 20mm - 0.5mm);
         align-content: space-between;
         overflow: hidden;
         background: var(--background-taxo-superior) !important;
+        cursor: default !important;
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
     }
@@ -107,8 +79,8 @@ $calendario-print-alto: calc(210mm - 20mm - 0.5mm);
         text-align: right;
     }
 
-    .calendario-imprimible .card-imprimible,
-    .calendario-imprimible article.card-imprimible {
+    .card-imprimible,
+    article.card-imprimible {
         color: #000 !important;
         border-color: #000 !important;
         border-width: 1px !important;
@@ -116,21 +88,48 @@ $calendario-print-alto: calc(210mm - 20mm - 0.5mm);
         box-shadow: none !important;
     }
 
-    .calendario-imprimible .celda-vacia {
+    .celda-vacia {
         background: transparent !important;
         border: none !important;
         height: 100% !important;
         min-height: 0 !important;
     }
 
-    .calendario-imprimible input {
-        border: none !important;
-        border-bottom: 1px solid #000 !important;
-        background: transparent !important;
-        color: #000 !important;
-        width: 100% !important;
-        font-size: 28pt !important;
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
+    input {
+        display: none !important;
+    }
+}
+
+.calendario-imprimible.calendario-exportacion {
+    @include calendario-layout-imprimible;
+    overflow: visible !important;
+}
+
+@media print {
+    :host {
+        display: block;
+        height: auto !important;
+        min-height: 0 !important;
+    }
+
+    .calendario-pagina {
+        padding: 0 !important;
+        height: auto !important;
+    }
+
+    .calendario-pagina > section {
+        margin: 0 !important;
+        padding: 0 !important;
+        height: auto !important;
+    }
+
+    .calendario-pagina > section > .calendario-imprimible {
+        margin-top: 0 !important;
+    }
+
+    .calendario-imprimible {
+        @include calendario-layout-imprimible;
+        page-break-inside: avoid;
+        break-inside: avoid;
     }
 }

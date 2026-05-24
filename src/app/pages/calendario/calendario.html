@@ -38,6 +38,7 @@
 
         <div class="w-full overflow-x-auto pb-4 print:overflow-visible print:pb-0">
             <div
+                #calendarioImprimible
                 class="calendario-imprimible space-y-3 min-w-[1000px] lg:min-w-full print:min-w-full print:w-full"
             >
                 <div
@@ -106,6 +107,14 @@
                 (click)="limpiarTodoLocalStorage()"
             >
                 Limpiar datos
+            </button>
+            <button
+                class="cursor-pointer rounded-lg border-2 border-(--color-taxo) bg-(--background-taxo-superior) px-4 py-2 text-xl font-bold uppercase tracking-wide text-(--color-texto-taxo-oscuro) transition-colors hover:border-(--color-durazno) hover:bg-(--background-durazno-superior) hover:text-(--color-texto-durazno-oscuro) disabled:cursor-wait disabled:opacity-60"
+                type="button"
+                [disabled]="descargandoImagen()"
+                (click)="descargarHorarioComoImagen()"
+            >
+                {{ descargandoImagen() ? 'Generando imagen…' : 'Descargar imagen' }}
             </button>
             <button
                 class="cursor-pointer rounded-lg border-2 border-(--color-durazno) bg-(--background-durazno-superior) px-4 py-2 text-xl font-bold uppercase tracking-wide text-(--color-texto-durazno-oscuro)"

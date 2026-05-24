@@ -1,4 +1,9 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, ElementRef, OnInit, signal, viewChild } from '@angular/core';
+
+import {
+    capturarHorarioComoImagen,
+    descargarBlob,
+} from '@src/app/pages/calendario/calendario-exportacion';
 
 interface DiaCalendarioCard {
     tipo: 'vacio' | 'dia';
@@ -18,6 +23,9 @@ type AlmacenCalendario = Record<string, Record<string, string>>;
 export class Calendario implements OnInit {
     private static readonly STORAGE_KEY = 'luli-turnos-calendario-textos';
 
+    private readonly calendarioImprimible =
+        viewChild<ElementRef<HTMLElement>>('calendarioImprimible');
+
     public mesActual: string = '';
     public readonly diasSemana = [
         'LUNES',
@@ -34,6 +42,7 @@ export class Calendario implements OnInit {
     public diasCalendario: DiaCalendarioCard[] = [];
     public diaEnEdicion: number | null = null;
     public borradorTexto: string = '';
+    public descargandoImagen = signal(false);
     private textosPorDia: Record<number, string> = {};
 
     ngOnInit(): void {
@@ -104,6 +113,35 @@ export class Calendario implements OnInit {
             this.guardarEdicion(this.diaEnEdicion);
         }
         setTimeout(() => window.print(), 0);
+    }
+
+    public async descargarHorarioComoImagen(): Promise<void> {
+        if (this.descargandoImagen()) {
+            return;
+        }
+
+        if (this.diaEnEdicion !== null) {
+            this.guardarEdicion(this.diaEnEdicion);
+        }
+
+        const elemento = this.calendarioImprimible()?.nativeElement;
+        if (!elemento) {
+            return;
+        }
+
+        this.descargandoImagen.set(true);
+
+        try {
+            await new Promise<void>((resolve) => setTimeout(resolve, 0));
+            const blob = await capturarHorarioComoImagen(elemento);
+            const hoy = new Date();
+            const mesSlug = this.mesActual.toLowerCase().replace(/\s+/g, '-');
+            descargarBlob(blob, `luli-turnos-${mesSlug}-${hoy.getFullYear()}.png`);
+        } catch (error) {
+            console.error('Error al descargar el horario como imagen:', error);
+        } finally {
+            this.descargandoImagen.set(false);
+        }
     }
 
     /** Vacía todo el `localStorage` del navegador en este origen y reinicia el calendario. */
