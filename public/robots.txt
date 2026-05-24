@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://luli-turnos.netlify.app/sitemap.xml

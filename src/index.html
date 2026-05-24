@@ -5,9 +5,93 @@
         <title>LuliTurnos</title>
         <base href="/" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta
+            name="description"
+            content="Crea e imprime horarios mensuales personalizables. Elige los días de la semana, anota turnos en cada día y guarda tu calendario en el navegador."
+        />
+        <meta
+            name="keywords"
+            content="turnos, horarios, calendario mensual, imprimir horario, agenda, planificador"
+        />
+        <meta name="author" content="josliblue" />
+        <meta name="robots" content="index, follow, max-image-preview:large" />
+        <meta name="googlebot" content="index, follow" />
+        <meta name="theme-color" content="#fdcb9e" />
+        <meta name="application-name" content="Luli Turnos" />
+        <meta name="format-detection" content="telephone=no" />
+
+        <link rel="canonical" href="https://luli-turnos.netlify.app/" />
         <link rel="icon" type="image/x-icon" href="favicon.ico" />
+        <link rel="apple-touch-icon" href="luli-turnos.webp" />
+        <link rel="manifest" href="site.webmanifest" />
+
+        <!-- Open Graph -->
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="Luli Turnos" />
+        <meta property="og:locale" content="es_AR" />
+        <meta
+            property="og:title"
+            content="Luli Turnos — Calendario mensual para imprimir horarios"
+        />
+        <meta
+            property="og:description"
+            content="Crea e imprime horarios mensuales personalizables. Elige los días de la semana, anota turnos en cada día y guarda tu calendario en el navegador."
+        />
+        <meta property="og:url" content="https://luli-turnos.netlify.app/" />
+        <meta property="og:image" content="https://luli-turnos.netlify.app/luli-turnos.webp" />
+        <meta property="og:image:alt" content="Logo de Luli Turnos" />
+
+        <!-- Twitter Card -->
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta
+            name="twitter:title"
+            content="Luli Turnos — Calendario mensual para imprimir horarios"
+        />
+        <meta
+            name="twitter:description"
+            content="Crea e imprime horarios mensuales personalizables. Elige los días de la semana, anota turnos en cada día y guarda tu calendario en el navegador."
+        />
+        <meta name="twitter:image" content="https://luli-turnos.netlify.app/luli-turnos.webp" />
+        <meta name="twitter:image:alt" content="Logo de Luli Turnos" />
+
+        <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "WebApplication",
+                "name": "Luli Turnos",
+                "url": "https://luli-turnos.netlify.app/",
+                "description": "Crea e imprime horarios mensuales personalizables. Elige los días de la semana, anota turnos en cada día y guarda tu calendario en el navegador.",
+                "applicationCategory": "BusinessApplication",
+                "operatingSystem": "Web",
+                "browserRequirements": "Requires JavaScript",
+                "inLanguage": "es",
+                "image": "https://luli-turnos.netlify.app/luli-turnos.webp",
+                "author": {
+                    "@type": "Person",
+                    "name": "josliblue",
+                    "url": "https://github.com/josliblue"
+                },
+                "offers": {
+                    "@type": "Offer",
+                    "price": "0",
+                    "priceCurrency": "USD"
+                }
+            }
+        </script>
     </head>
     <body>
-        <app-root></app-root>
+        <app-root>
+            <noscript>
+                <main style="font-family: system-ui, sans-serif; max-width: 40rem; margin: 2rem auto; padding: 0 1rem;">
+                    <h1>Luli Turnos</h1>
+                    <p>
+                        Calendario mensual para crear e imprimir horarios. Selecciona los días de
+                        la semana, anota turnos en cada día y guarda tu calendario en el
+                        navegador.
+                    </p>
+                    <p>Esta aplicación requiere JavaScript para funcionar.</p>
+                </main>
+            </noscript>
+        </app-root>
     </body>
 </html>

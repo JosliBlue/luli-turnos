@@ -1,19 +1,22 @@
 <div class="calendario-pagina p-4 md:p-8">
-    <section class="space-y-4">
+    <section class="space-y-4" aria-labelledby="calendario-titulo-mes">
         <div class="no-imprimir flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <div class="flex gap-4 items-center">
-                <h2 class="text-4xl uppercase font-extrabold tracking-widest">
+                <h2 id="calendario-titulo-mes" class="text-4xl uppercase font-extrabold tracking-widest">
                     {{ mesActual }}
                 </h2>
             </div>
 
-            <div class="flex flex-wrap gap-4 items-center">
-                <span>Da click sobre los dias para que aparezcan:</span>
+            <fieldset class="flex flex-wrap gap-4 items-center border-0 p-0 m-0 min-w-0">
+                <legend class="sr-only">Días visibles en el calendario</legend>
+                <span id="selector-dias-label">Da click sobre los dias para que aparezcan:</span>
                 @for (dia of diasSemana; track dia) {
                     @if (diasSeleccionados().includes(dia)) {
                         <button
                             class="cursor-pointer rounded-lg border border-(--color-texto-taxo-oscuro) bg-(--color-texto-taxo-oscuro) px-3 py-1.5 text-md font-semibold text-(--background-taxo-superior) transition-colors duration-200 hover:border-(--color-texto-durazno-oscuro) hover:bg-(--color-texto-durazno-oscuro) hover:text-(--background-durazno-superior)"
                             type="button"
+                            [attr.aria-pressed]="true"
+                            [attr.aria-label]="'Ocultar ' + dia"
                             (click)="toggleDia(dia)"
                         >
                             {{ dia }}
@@ -22,13 +25,15 @@
                         <button
                             class="cursor-pointer rounded-lg border border-(--color-taxo) bg-(--background-taxo-superior) px-3 py-1.5 text-md font-semibold text-(--color-texto-taxo-oscuro) transition-colors duration-200 hover:border-(--color-durazno) hover:bg-(--background-durazno-superior) hover:text-(--color-texto-durazno-oscuro)"
                             type="button"
+                            [attr.aria-pressed]="false"
+                            [attr.aria-label]="'Mostrar ' + dia"
                             (click)="toggleDia(dia)"
                         >
                             {{ dia }}
                         </button>
                     }
                 }
-            </div>
+            </fieldset>
         </div>
 
         <div class="w-full overflow-x-auto pb-4 print:overflow-visible print:pb-0">
@@ -37,6 +42,7 @@
             >
                 <div
                     class="calendario-print-encabezados grid gap-3"
+                    role="row"
                     [style.gridTemplateColumns]="columnasGrid"
                 >
                     @for (dia of diasSeleccionados(); track dia) {
@@ -50,6 +56,8 @@
 
                 <div
                     class="calendario-print-celdas grid gap-3"
+                    role="grid"
+                    aria-label="Calendario del mes"
                     [style.gridTemplateColumns]="columnasGrid"
                 >
                     @for (celda of diasCalendario; track $index) {

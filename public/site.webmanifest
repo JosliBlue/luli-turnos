@@ -1,0 +1,23 @@
+{
+    "name": "Luli Turnos",
+    "short_name": "Luli Turnos",
+    "description": "Calendario mensual para crear e imprimir horarios personalizables.",
+    "lang": "es",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#fdcb9e",
+    "theme_color": "#fdcb9e",
+    "icons": [
+        {
+            "src": "/luli-turnos.webp",
+            "sizes": "512x512",
+            "type": "image/webp",
+            "purpose": "any"
+        },
+        {
+            "src": "/favicon.ico",
+            "sizes": "48x48",
+            "type": "image/x-icon"
+        }
+    ]
+}
