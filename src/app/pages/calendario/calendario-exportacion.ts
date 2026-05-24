@@ -1,5 +1,3 @@
-import { domToBlob } from 'modern-screenshot';
-
 const CAPTURE_SCALE = 2;
 
 function esperarRender(): Promise<void> {
@@ -10,6 +8,8 @@ function esperarRender(): Promise<void> {
 
 /** Captura el horario con estilos de impresión y lo devuelve como PNG. */
 export async function capturarHorarioComoImagen(elemento: HTMLElement): Promise<Blob> {
+    const { domToBlob } = await import('modern-screenshot');
+
     const contenedor = document.createElement('div');
     contenedor.style.cssText =
         'position:fixed;left:-9999px;top:0;opacity:0;pointer-events:none;overflow:visible;';

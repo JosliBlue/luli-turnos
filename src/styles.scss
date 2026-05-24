@@ -17,11 +17,11 @@
 
     --background-durazno: color-mix(in srgb, var(--color-durazno) 25%);
     --background-durazno-superior: color-mix(in srgb, var(--color-durazno) 15%, white);
-    --color-texto-durazno-oscuro: color-mix(in srgb, var(--color-durazno) 45%, #3f2008);
+    --color-texto-durazno-oscuro: #6b4a2e;
 
     --background-taxo: color-mix(in srgb, var(--color-taxo) 25%);
     --background-taxo-superior: color-mix(in srgb, var(--color-taxo) 15%, white);
-    --color-texto-taxo-oscuro: color-mix(in srgb, var(--color-taxo) 5%, #b5a318);
+    --color-texto-taxo-oscuro: #6b5c0a;
 }
 
 html {

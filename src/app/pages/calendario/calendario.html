@@ -43,7 +43,6 @@
             >
                 <div
                     class="calendario-print-encabezados grid gap-3"
-                    role="row"
                     [style.gridTemplateColumns]="columnasGrid"
                 >
                     @for (dia of diasSeleccionados(); track dia) {
@@ -57,8 +56,6 @@
 
                 <div
                     class="calendario-print-celdas grid gap-3"
-                    role="grid"
-                    aria-label="Calendario del mes"
                     [style.gridTemplateColumns]="columnasGrid"
                 >
                     @for (celda of diasCalendario; track $index) {
