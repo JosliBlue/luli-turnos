@@ -48,7 +48,9 @@ $calendario-print-alto: calc(210mm - 20mm - 0.5mm);
         min-height: 0 !important;
         height: 100% !important;
         align-content: stretch !important;
-        grid-auto-rows: 1fr !important;
+        /* minmax(0,1fr): evita que filas inferiores se encojan (mínimo auto de 1fr). */
+        grid-template-rows: repeat(var(--calendario-filas, 6), minmax(0, 1fr)) !important;
+        grid-auto-rows: minmax(0, 1fr) !important;
         gap: 5mm !important;
     }
 

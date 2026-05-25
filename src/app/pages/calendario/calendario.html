@@ -57,6 +57,7 @@
                 <div
                     class="calendario-print-celdas grid gap-3"
                     [style.gridTemplateColumns]="columnasGrid"
+                    [style.--calendario-filas]="filasCalendario"
                 >
                     @for (celda of diasCalendario; track $index) {
                         @if (celda.tipo === 'dia') {

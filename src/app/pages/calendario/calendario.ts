@@ -74,6 +74,15 @@ export class Calendario implements OnInit {
         return `repeat(${this.diasSeleccionados().length || 1}, minmax(0, 1fr))`;
     }
 
+    /** Semanas del mes visibles; usado para repartir alto uniforme al imprimir/exportar. */
+    public get filasCalendario(): number {
+        const columnas = this.diasSeleccionados().length;
+        if (columnas === 0 || this.diasCalendario.length === 0) {
+            return 1;
+        }
+        return Math.ceil(this.diasCalendario.length / columnas);
+    }
+
     public iniciarEdicion(celda: DiaCalendarioCard): void {
         if (celda.tipo !== 'dia' || celda.numeroDia === undefined) {
             return;
